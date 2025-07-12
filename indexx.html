@@ -1,0 +1,89 @@
+<h1 id="title">Guess the Number Game</h1>
+<input id="guessnumber" type="number" min="1" max="10">
+<button id="checkButton" onclick="checknumber()">Check</button>
+<P id="result">You are Wrong/Right</P>
+<p id="score">Score: 10</p>
+
+<script>
+    // Apply styles dynamically using JavaScript
+    document.body.style.fontFamily = 'Arial, sans-serif';
+    document.body.style.backgroundColor = '#f0f8ff';
+    document.body.style.textAlign = 'center';
+    document.body.style.padding = '20px';
+    
+    var title = document.getElementById("title");
+    title.style.color = '#ff6347';  // Tomato color
+    title.style.fontSize = '36px';
+    
+    var guessnumber = document.getElementById("guessnumber");
+    guessnumber.style.padding = '10px';
+    guessnumber.style.fontSize = '16px';
+    guessnumber.style.borderRadius = '5px';
+    guessnumber.style.margin = '10px';
+    
+    var checkButton = document.getElementById("checkButton");
+    checkButton.style.backgroundColor = '#32cd32'; // Lime Green
+    checkButton.style.color = 'white';
+    checkButton.style.padding = '10px 20px';
+    checkButton.style.fontSize = '18px';
+    checkButton.style.border = 'none';
+    checkButton.style.borderRadius = '5px';
+    checkButton.style.cursor = 'pointer';
+    checkButton.style.marginTop = '10px';
+    
+    checkButton.addEventListener('mouseover', function() {
+        checkButton.style.backgroundColor = '#228b22'; // Forest Green
+    });
+
+    checkButton.addEventListener('mouseout', function() {
+        checkButton.style.backgroundColor = '#32cd32'; // Lime Green
+    });
+    
+    var result = document.getElementById("result");
+    result.style.fontSize = '20px';
+    result.style.fontWeight = 'bold';
+    
+    var score = document.getElementById("score");
+    score.style.fontSize = '18px';
+    score.style.fontWeight = 'bold';
+    
+    var randomNumber = Math.floor(Math.random() * 10) + 1;
+    var totalscore = 10;
+
+    function checknumber() {
+        var enterednumber = parseInt(guessnumber.value);
+
+        if (isNaN(enterednumber) || enterednumber < 1 || enterednumber > 10) {
+            alert("Please enter a number between 1 and 10.");
+            return;
+        }
+
+        if (randomNumber == enterednumber) {
+            console.log("Right");
+            result.textContent = "Right";
+            result.style.color = '#008000'; // Green color for correct answer
+            alert("YOU WON!");
+            resetGame();
+        } else {
+            totalscore = Math.max(totalscore - 1, 0);
+            score.textContent = "Score: " + totalscore;
+            result.textContent = "Wrong";
+            result.style.color = '#ff0000'; // Red color for wrong answer
+
+            if (totalscore === 0) {
+                alert("Game Over! You've run out of attempts.");
+                resetGame();
+            }
+        }
+    }
+
+    function resetGame() {
+        randomNumber = Math.floor(Math.random() * 10) + 1;
+        totalscore = 10;
+        score.textContent = "Score: " + totalscore;
+        result.textContent = "You are Wrong/Right";
+        result.style.color = '#000000'; // Reset result color to black
+        guessnumber.value = "";
+    }
+</script>
+
